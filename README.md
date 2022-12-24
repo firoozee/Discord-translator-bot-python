@@ -22,3 +22,5 @@ Create an ``.env`` file and define a ``TOKEN`` constant to be your Discord bot t
 ```bash
 python bot.py
 ```
+googletrans : find the wiki here
+https://py-googletrans.readthedocs.io/en/latest/
