@@ -13,7 +13,7 @@ dotenv.load_dotenv()
 ###########################
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='/', intents=intents)
 is_client_running = False
 
 
@@ -41,7 +41,7 @@ async def on_message(message):
         await message.channel.send(f"Hello {message.author.mention}")
         return
 
-    if not message.content.startswith('!'):
+    if not message.content.startswith('/'):
         return
 
     # Process command
@@ -70,8 +70,15 @@ async def on_command_error(ctx, error):
 @bot.command(aliases=['tr'])
 async def translate(ctx, lang_to, *args):
     """
-    Translates the given text to the language `lang_to`.
-    The language translated from is automatically detected.
+    To use this bot, type :
+                        /tr fa 'followed by the text you want to translate.'
+                       For example: '/tr fa Hello, how are you?' The bot will translate the text to the specified language(farsi).
+                       the text that you type is auto detected so you dont need to specify the language you are typing in, just specify the language you want it to be translated to
+                       here is the list of laguages and the codes to chose from(to translate to):
+                       fa= farsi
+                       en= english
+                       de= german
+                       fr= french
     """
 
     lang_to = lang_to.lower()
@@ -82,6 +89,28 @@ async def translate(ctx, lang_to, *args):
     translator = googletrans.Translator()
     text_translated = translator.translate(text, dest=lang_to).text
     await ctx.send(text_translated)
+
+###########################
+# Help command
+###########################
+@bot.command(aliases=['hlp'])
+async def on_message(message):
+
+        # Send the instructions to the channel
+        instructions = """To use this bot, type :
+                        /tr fa 'followed by the text you want to translate.' 
+                       For example: '/tr fa Hello, how are you?' The bot will translate the text to the specified language(farsi).
+                       the text that you type is auto detected so you dont need to specify the language you are typing in, just specify the language you want it to be translated to 
+                       here is the list of laguages and the codes to chose from(to translate to):
+                       fa= farsi
+                       en= english
+                       de= german
+                       fr= french
+                       """
+
+        await message.channel.send(instructions)
+
+
 
 
 
